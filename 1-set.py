@@ -7,7 +7,7 @@ def hex_decode(string):
     hex = hex_str.decode("hex")
     return binascii.b2a_base64(hex)
 
-print(hex_decode(hex_str))
+print 'Challenge 1 solution: \n', hex_decode(hex_str) 
 
 # equivalent of hex_str.decode("hex")
 def hex2ascii(string):
@@ -55,13 +55,12 @@ def xor_hex_strings(xs, ys):
     return "".join(chr(x ^ y) for x, y in zip(bytes1, bytes2))
 
 result = xor_hex_strings(str1, str2)
-print result 
+print "Challenge 2 solution: \n", result, '\n'
 
 # ========== Challenge 3  ========== #
 
 str3 = '1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736'
 letters = map(chr, range(ord('a'), ord('z')+1))
-print(letters)
 
 char_freq = {
     65: 0.08167,
@@ -108,12 +107,10 @@ def find_char_freq(str):
     results = {}
     for l in letters:
         results[l] = xor_single_char(l, str)
-    print results
 
     result_freq = []
     for char in results:
         result = results[char]
-        print result
         frequencies = {}
 
         for letter in result:
@@ -130,13 +127,20 @@ def find_char_freq(str):
             sum += frequencies[c]
         freq = coincidenceIndex - sum
 
-        obj = {}
-        obj['freq'] = freq
-        obj['letter'] = char
-        result_freq.append(obj)
-        print result_freq
+        tup = (char, freq)
+        result_freq.append(tup)
 
+    sorted_by_freq = sorted(result_freq, key=lambda tup: tup[1])
+    return sorted_by_freq
 
-# print(xor_single_char('x', str3))
-find_char_freq(str3)
+def printXorResult(range, str):
+    result_freq = find_char_freq(str)
+    num = 0
+    while num < range:
+        print "Number ", num + 1, " result: "
+        print(xor_single_char(result_freq[num][0], str))
+        num += 1
+
+print 'Challenge 3 solution:'
+printXorResult(3, str3)
 
